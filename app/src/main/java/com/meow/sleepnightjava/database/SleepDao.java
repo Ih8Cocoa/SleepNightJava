@@ -31,6 +31,10 @@ public interface SleepDao {
     @Query("SELECT * FROM daily_sleep_quality WHERE nightId = :id LIMIT 1")
     Maybe<SleepNight> get(final long id);
 
+    // same as get() but returns LiveData
+    @Query("SELECT * FROM daily_sleep_quality WHERE nightId = :id LIMIT 1")
+    LiveData<SleepNight> getLiveData(final long id);
+
     // Delete everything from the database
     @Query("DELETE FROM daily_sleep_quality")
     Completable deleteAll();
