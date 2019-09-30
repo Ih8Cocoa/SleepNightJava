@@ -13,7 +13,7 @@ public final class SleepDetailViewModel extends ViewModel {
     private final long sleepNightKey;
     private final SleepDao sleepDao;
 
-    private final MediatorLiveData<SleepNight> night;
+    private final MediatorLiveData<SleepNight> night = new MediatorLiveData<>();
 
     // signal the navigation back to SleepTracker
     private final MutableLiveData<Boolean> navigateBack = new MutableLiveData<>(false);
@@ -29,14 +29,13 @@ public final class SleepDetailViewModel extends ViewModel {
     public SleepDetailViewModel(long sleepNightKey, SleepDao sleepDao) {
         this.sleepNightKey = sleepNightKey;
         this.sleepDao = sleepDao;
-        // initialize MediatorLiveData
-        night = new MediatorLiveData<>();
         final LiveData<SleepNight> nightLiveData = sleepDao.getLiveData(sleepNightKey);
+        // add the nightLiveData to the mediator's observation
         night.addSource(nightLiveData, night::setValue);
     }
 
     public void doneNavigating() {
-        navigateBack.setValue(null);
+        navigateBack.setValue(false);
     }
 
     public void onClose() {

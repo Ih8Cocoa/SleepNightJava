@@ -30,4 +30,19 @@
             android:name="nightId"
             app:argType="long" />
     </fragment>
+    <fragment
+        android:id="@+id/sleepDetailFragment"
+        android:name="com.meow.sleepnightjava.sleepdetail.SleepDetailFragment"
+        android:label="fragment_sleep_detail"
+        tools:layout="@layout/fragment_sleep_detail" >
+        <argument
+            android:name="nightId"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_sleepDetailFragment_to_sleepTrackerFragment"
+            app:destination="@id/sleepTrackerFragment"
+            app:launchSingleTop="false"
+            app:popUpTo="@+id/sleepTrackerFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
 </navigation>

@@ -41,6 +41,8 @@ public final class SleepTrackerViewModel extends AndroidViewModel {
 
     // This will signal an event to navigate to SleepQuality fragment
     private final MutableLiveData<SleepNight> navigateToSleepQuality = new MutableLiveData<>();
+    // and also another event signal to go to SleepDetails fragment
+    private final MutableLiveData<Long> navigateToSleepDetails = new MutableLiveData<>();
 
     // This will signal whether to show a snackbar or not
     private final MutableLiveData<Boolean> showSnackbarEvent = new MutableLiveData<>(false);
@@ -71,6 +73,10 @@ public final class SleepTrackerViewModel extends AndroidViewModel {
         return nightsString;
     }
 
+    public LiveData<List<SleepNight>> getNights() {
+        return nights;
+    }
+
     public LiveData<SleepNight> getNavigateToSleepQuality() {
         return navigateToSleepQuality;
     }
@@ -91,12 +97,25 @@ public final class SleepTrackerViewModel extends AndroidViewModel {
         return clearButtonVisible;
     }
 
+    public LiveData<Long> getNavigateToSleepDetails() {
+        return navigateToSleepDetails;
+    }
+
     public void doneNavigating() {
         navigateToSleepQuality.setValue(null);
     }
 
     public void doneShowingSnackbar() {
         showSnackbarEvent.setValue(false);
+    }
+
+    public void onSleepNightClicked(long nightId) {
+        navigateToSleepDetails.setValue(nightId);
+    }
+
+    public void onSleepDetailsNavigated() {
+        // successfully navigated, set it back to null
+        navigateToSleepDetails.setValue(null);
     }
 
     @Override

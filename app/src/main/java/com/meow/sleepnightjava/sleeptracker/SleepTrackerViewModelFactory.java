@@ -14,7 +14,7 @@ public final class SleepTrackerViewModelFactory implements ViewModelProvider.Fac
     private final SleepDao sleepDao;
     private final Application app;
 
-    public SleepTrackerViewModelFactory(final SleepDao sleepDao, final Application app) {
+    SleepTrackerViewModelFactory(final SleepDao sleepDao, final Application app) {
         this.sleepDao = sleepDao;
         this.app = app;
     }

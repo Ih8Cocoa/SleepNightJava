@@ -58,14 +58,14 @@ public final class SleepNight {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SleepNight that = (SleepNight) o;
-        return getQuality() == that.getQuality() &&
+        return getNightId() == that.getNightId() &&
+                getQuality() == that.getQuality() &&
                 getStartTimeMillis() == that.getStartTimeMillis() &&
-                getEndTimeMillis() == that.getEndTimeMillis() &&
-                getNightId() == that.getNightId();
+                getEndTimeMillis() == that.getEndTimeMillis();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getQuality(), getStartTimeMillis(), getEndTimeMillis(), getNightId());
+        return Objects.hash(getNightId(), getQuality(), getStartTimeMillis(), getEndTimeMillis());
     }
 }

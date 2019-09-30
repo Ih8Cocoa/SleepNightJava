@@ -12,13 +12,14 @@ import com.meow.sleepnightjava.database.SleepNight;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 // Just a class that store utility functions
 public final class Util {
     private Util() {
     }
 
-    private static String convertNumericQualityToString(final int quality, final Resources res) {
+    public static String convertNumericQualityToString(final int quality, final Resources res) {
         String qualityString = res.getString(R.string.three_ok);
         switch (quality) {
             case -1:
@@ -91,7 +92,25 @@ public final class Util {
         return Html.fromHtml(finalString, Html.FROM_HTML_MODE_LEGACY);
     }
 
-    private static void appendTab(StringBuilder sb) {
-        sb.append("\t");
+    public static String convertDurationToFormatted(
+            long startTimeMillis, long endTimeMillis, final Resources res
+    ) {
+        final long durationMillis = endTimeMillis - startTimeMillis;
+        final SimpleDateFormat sdf = new SimpleDateFormat("EEEE", Locale.getDefault());
+        final String weekdayStr = sdf.format(startTimeMillis);
+        // set the time units
+        final long oneMinuteMillis = TimeUnit.MILLISECONDS.convert(1, TimeUnit.MINUTES);
+        final long oneHourMillis = TimeUnit.MILLISECONDS.convert(1, TimeUnit.HOURS);
+        // return the result string accordingly
+        if (durationMillis < oneMinuteMillis) {
+            final long seconds = TimeUnit.SECONDS.convert(durationMillis, TimeUnit.MILLISECONDS);
+            return res.getString(R.string.seconds_length, seconds, weekdayStr);
+        }
+        if (durationMillis < oneHourMillis) {
+            final long minutes = TimeUnit.MINUTES.convert(durationMillis, TimeUnit.MILLISECONDS);
+            return res.getString(R.string.minutes_length, minutes, weekdayStr);
+        }
+        final long hours = TimeUnit.HOURS.convert(durationMillis, TimeUnit.MILLISECONDS);
+        return res.getString(R.string.hours_length, hours, weekdayStr);
     }
 }
